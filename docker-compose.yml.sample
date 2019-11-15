@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  code-server:
+    build: .
+    image: siromitu26/my-coder:latest
+    volumes:
+      - "./data/project:/home/coder/project:rw"
+      - "./data/local:/home/coder/.local:rw"
+      - "./data/cache:/home/coder/.cache:rw"
+      - "./:/home/coder/.repo:rw"
+    environment:
+      PASSWORD: "SUPER_STRONG_PASSWORD"
+    hostname: "development.example.com"

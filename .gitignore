@@ -2,3 +2,4 @@ data/project/*
 data/local/*
 data/cache/*
 *.retry
+docker-compose.yml

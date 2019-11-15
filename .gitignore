@@ -1,0 +1,4 @@
+data/project/*
+data/local/*
+data/cache/*
+*.retry

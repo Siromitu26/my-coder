@@ -1,0 +1,12 @@
+---
+- name: Install rbenv
+  include: install_rbenv.yml
+  tag: 'install_rbenv'
+
+- name: Install Ruby via rbenv
+  shell: 
+    cmd: "rbenv install {{ item }}"
+    executable: "/bin/bash"
+  with_items:
+    - "2.6.5"
+

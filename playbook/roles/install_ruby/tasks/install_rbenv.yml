@@ -1,0 +1,47 @@
+---
+- name: Deploy rbenv 
+  git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: ~/.rbenv
+
+- name: Insert rbenv PATH into ~/.bashrc
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} ansible managed block for rbenv"
+    content: |
+      export RBENV_ROOT="~/.rbenv"
+      export PATH="$RBENV_ROOT/bin:$PATH"
+      eval "$(rbenv init -)"
+
+- name: Deploy ruby-build as rbenv plugin
+  git:
+    repo: "https://github.com/rbenv/ruby-build.git"
+    dest: "~/.rbenv/plugins/ruby-build"
+
+- name: Install dependent packages for ruby-build
+  apt:
+    name: 
+      - autoconf 
+      - bison 
+      - build-essential 
+      - libssl-dev
+      - libyaml-dev
+      - libreadline6-dev
+      - zlib1g-dev
+      - libncurses5-dev
+      - libffi-dev
+      - libgdbm5
+      - libgdbm-dev
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: Precompile rbenv 
+  shell: 
+    cmd: "src/configure && make -C src"
+    chdir: "~/.rbenv"
+  
+- name: Reload shell environment 
+  shell: 
+    cmd: "source ~/.bashrc"
+    executable: "/bin/bash"

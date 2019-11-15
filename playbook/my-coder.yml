@@ -1,0 +1,6 @@
+---
+- hosts: my-coder 
+  connection: local
+  roles:
+    - install_development_tools
+    - install_ruby

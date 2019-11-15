@@ -1,0 +1,9 @@
+---
+- name: Install development tools
+  apt:
+    name:
+      - git
+      - screen 
+    state: latest
+    update_cache: yes
+  become: yes
